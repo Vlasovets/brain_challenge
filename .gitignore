@@ -3,7 +3,7 @@
 *f-threshold-select/plots/.ipynb_checkpoints/
 *f-threshold-select/.ipynb_checkpoints/
 
-.nfs000000017290bb7d00007ade
+.nfs*
 #ignore GGLasso developer directory
 
 *f-threshold-select/GGLasso/
