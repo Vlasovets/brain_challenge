@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import scipy as sp
+import os
 import matplotlib.pyplot as plt
 
 from numpy.linalg import matrix_rank
@@ -20,6 +21,7 @@ from matplotlib.pyplot import figure
 from scipy import stats
 from scipy.linalg import eigh
 from numpy import genfromtxt
+from datetime import datetime
 
 from gglasso.solver.admm_solver import ADMM_MGL
 from gglasso.problem import glasso_problem
@@ -33,26 +35,27 @@ from gglasso.helper.experiment_helper import plot_evolution, plot_deviation, sur
 from gglasso.helper.model_selection import aic, ebic, K_single_grid
 
 
+datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
 # ### Read data
 
-sub_corr = []
+corr = []
 
-for i in range(0, 50):
-    sub_corr.append(genfromtxt("/storage/groups/bds01/datasets/brains/sub_corr50/sub_corr{0}.csv".format(i), delimiter=','))
+for i in range(0, 950):
+    corr.append(genfromtxt("/storage/groups/bds01/datasets/brains/corr_matrices/corr{0}.csv".format(i), delimiter=','))
 
-sub_corr = np.array(sub_corr)
-sub_corr.shape
+corr = np.array(corr)
+corr.shape
 
 
 # ### Single GL
-
 lambda1_range = np.logspace(0, -3, 8)
 
 
-N = sub_corr.shape[1]
+N = corr.shape[1]
 
 
-est_uniform, est_indv, statistics = K_single_grid(sub_corr, lambda1_range, N, 
+est_uniform, est_indv, statistics = K_single_grid(corr[:100,:], lambda1_range, N, 
                                                   method = 'eBIC', gamma = 0.3, 
                                                   latent = False, use_block = True)
 
@@ -60,10 +63,18 @@ est_uniform, est_indv, statistics = K_single_grid(sub_corr, lambda1_range, N,
 K = est_uniform["Theta"].shape[0]
 
 
+os.mkdir("/storage/groups/bds01/datasets/brains/est_uniform{0}/".format(K))
+os.mkdir("/storage/groups/bds01/datasets/brains/est_individ{0}/".format(K))
+
 # dump matrices into csv
 for i in range(0, K):
-    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform50/est_uniform{0}.csv".format(i), est_uniform["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform{0}/est_uniform{1}.csv".format(K, i), est_uniform["Theta"][i], 
+               delimiter=",", header='')
+    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform{0}/est_individ{1}.csv".format(K, i), est_indv["Theta"][i], 
                delimiter=",", header='')
     
-with open('/storage/groups/bds01/datasets/brains/statistics_SGL50.txt', 'w') as f:
+with open("/storage/groups/bds01/datasets/brains/est_uniform50/statistics{0}.txt".format(K), 'w') as f:
     print(statistics, file=f)
+    
+
+datetime.now().strftime('%Y-%m-%d %H:%M:%S')
