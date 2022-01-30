@@ -127,3 +127,18 @@ TermSocket.open: Opened 4
 [I 2022-01-30 20:21:46.820 ServerApp] Starting buffering for 7bd69890-0f4e-401a-84e6-d05b6c6353e3:e7a0a845-fbe5-4ca7-a154-0ab6953934b0
 [I 2022-01-30 20:21:47.470 ServerApp] Starting buffering for 908f88a8-1e36-4d2b-b09f-b59b05901cdf:c4115bdf-5cea-4654-8b3c-c89360e1bea6
 [I 2022-01-30 20:21:49.997 ServerApp] Starting buffering for ce756df9-d951-47bb-9d63-abca4e79aa75:3ff7df9e-c145-4f7e-a49b-1b33bbf2783b
+[W 2022-01-30 20:22:55.094 ServerApp] Notebook f-threshold-select/draft_notebook.ipynb is not trusted
+[W 2022-01-30 20:23:24.402 ServerApp] Notebook f-threshold-select/draft_notebook.ipynb is not trusted
+[W 2022-01-30 20:23:34.362 ServerApp] Notebook gglasso_notebook.ipynb is not trusted
+[I 2022-01-30 20:23:36.884 ServerApp] Kernel started: 283ceb1e-6231-4cf5-9051-a5e8aa516b95
+[I 2022-01-30 20:24:17.747 ServerApp] Saving file at /f-threshold-select/draft_notebook.ipynb
+[I 2022-01-30 20:24:19.719 ServerApp] Starting buffering for 4c7ececd-38f9-48d7-9116-0a160d2514c9:5a0ea57b-53af-4620-aced-c326c8e3a018
+[I 2022-01-30 20:24:31.980 ServerApp] Saving file at /gglasso_notebook.ipynb
+[I 2022-01-30 20:24:33.108 ServerApp] Starting buffering for 283ceb1e-6231-4cf5-9051-a5e8aa516b95:10906489-964e-42d0-84df-60d686571a44
+[I 2022-01-30 20:24:37.550 ServerApp] Saving file at /f-threshold-select/SGL.ipynb
+[I 2022-01-30 20:24:38.811 ServerApp] Starting buffering for 474efea8-e5d6-475a-aa50-daff6beae396:424827d1-224a-479e-aad5-02edecf64cec
+[I 2022-01-30 20:25:02.515 ServerApp] Saving file at /f-threshold-select/SGL_latent.ipynb
+[I 2022-01-30 20:25:05.274 ServerApp] Starting buffering for d673fd66-3314-4998-abb7-e97d62d658c8:682c5bfc-dc64-49a7-8379-e08071c33535
+[I 2022-01-30 20:25:09.808 ServerApp] Saving file at /f-threshold-select/GGL.ipynb
+[I 2022-01-30 20:25:11.268 ServerApp] Starting buffering for 4cc794c5-6683-43b2-a918-b144e5c42fc7:6e820238-7978-4c16-9031-9f2d3b3e3809
+[I 2022-01-30 20:25:53.082 ServerApp] Starting buffering for 283ceb1e-6231-4cf5-9051-a5e8aa516b95:95af82f9-db86-475a-bc42-6ed968c4d7a8
