@@ -71,5 +71,5 @@ for i in range(0, K):
     np.savetxt("/storage/groups/bds01/datasets/brains/est_individ{0}/est_individ{1}.csv".format(K, i), est_indv["Theta"][i], 
                delimiter=",", header='')
     
-with open("/storage/groups/bds01/datasets/brains/est_uniform50/statistics{0}.txt".format(K), 'w') as f:
+with open("statistics{0}.txt".format(K), 'w') as f:
     print(statistics, file=f)
