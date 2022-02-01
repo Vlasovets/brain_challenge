@@ -36,10 +36,12 @@ from gglasso.helper.model_selection import aic, ebic, K_single_grid
 
 
 # ### Read data
+start = 600
+stop = 951
 
 corr = []
 
-for i in range(0, 950):
+for i in range(start, stop):
     corr.append(genfromtxt("/storage/groups/bds01/datasets/brains/corr_matrices/corr{0}.csv".format(i), delimiter=','))
 
 corr = np.array(corr)
@@ -53,7 +55,7 @@ lambda1_range = np.logspace(-0.9, -1.5, 10)
 N = corr.shape[1]
 
 
-est_uniform, est_indv, statistics = K_single_grid(corr[601:, :], lambda1_range, N, 
+est_uniform, est_indv, statistics = K_single_grid(corr, lambda1_range, N, 
                                                   method = 'eBIC', gamma = 0.3, 
                                                   latent = False, use_block = True)
 
@@ -65,7 +67,7 @@ os.mkdir("/storage/groups/bds01/datasets/brains/est_uniform{0}/".format(K))
 os.mkdir("/storage/groups/bds01/datasets/brains/est_individ{0}/".format(K))
 
 # dump matrices into csv
-for i in range(0, K):
+for i in range(start, stop):
     np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform{0}/est_uniform{1}.csv".format(K, i), est_uniform["Theta"][i], 
                delimiter=",", header='')
     np.savetxt("/storage/groups/bds01/datasets/brains/est_individ{0}/est_individ{1}.csv".format(K, i), est_indv["Theta"][i], 
