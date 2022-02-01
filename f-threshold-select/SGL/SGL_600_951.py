@@ -66,12 +66,14 @@ K = "600-951"
 os.mkdir("/storage/groups/bds01/datasets/brains/est_uniform{0}/".format(K))
 os.mkdir("/storage/groups/bds01/datasets/brains/est_individ{0}/".format(K))
 
+ix = 0
 # dump matrices into csv
 for i in range(start, stop):
-    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform{0}/est_uniform{1}.csv".format(K, i), est_uniform["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform{0}/est_uniform{1}.csv".format(K, i), est_uniform["Theta"][ix], 
                delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/est_individ{0}/est_individ{1}.csv".format(K, i), est_indv["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/est_individ{0}/est_individ{1}.csv".format(K, i), est_indv["Theta"][ix], 
                delimiter=",", header='')
+    ix += 1
     
 with open("statistics{0}.txt".format(K), 'w') as f:
     print(statistics, file=f)
