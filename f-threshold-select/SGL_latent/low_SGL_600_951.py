@@ -76,18 +76,21 @@ K = "600-951"
 os.mkdir("/storage/groups/bds01/datasets/brains/low_est_uniform{0}/".format(K))
 os.mkdir("/storage/groups/bds01/datasets/brains/low_est_individ{0}/".format(K))
 
+
+ix=0
 # dump matrices into csv
 for i in range(start, stop):
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform{0}/low_est_uniform_Theta{1}.csv".format(K, i), low_est_uniform["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform{0}/low_est_uniform_Theta{1}.csv".format(K, i), low_est_uniform["Theta"][ix], 
                delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform{0}/low_est_uniform_L{1}.csv".format(K, i), low_est_uniform["L"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform{0}/low_est_uniform_L{1}.csv".format(K, i), low_est_uniform["L"][ix], 
                delimiter=",", header='')
     
     
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ{0}/low_est_individ_Theta{1}.csv".format(K, i), low_est_indv["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ{0}/low_est_individ_Theta{1}.csv".format(K, i), low_est_indv["Theta"][ix], 
                delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ{0}/low_est_individ_L{1}.csv".format(K, i), low_est_indv["L"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ{0}/low_est_individ_L{1}.csv".format(K, i), low_est_indv["L"][ix], 
                delimiter=",", header='')
+    ix +=1
     
 with open("low_statistics{0}.txt".format(K), 'w') as f:
     print(low_statistics, file=f)
