@@ -77,9 +77,9 @@ print("--- TIME: {0} ---".format(run_time))
 
 # dump matrices into csv
 for i in range(start, stop):
-    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform/est_uniform{1}.csv".format(i), est_uniform["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform/est_uniform{0}.csv".format(i), est_uniform["Theta"][i], 
                delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/est_individ/est_individ{1}.csv".format(i), est_indv["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/est_individ/est_individ{0}.csv".format(i), est_indv["Theta"][i], 
                delimiter=",", header='')
     
     

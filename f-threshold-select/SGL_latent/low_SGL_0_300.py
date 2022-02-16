@@ -72,25 +72,23 @@ low_statistics['time'] = run_time
 print("--- TIME: {0} ---".format(run_time))
 
 
-K = "0-300"
 
-
-os.mkdir("/storage/groups/bds01/datasets/brains/low_est_uniform{0}/".format(K))
-os.mkdir("/storage/groups/bds01/datasets/brains/low_est_individ{0}/".format(K))
+# os.mkdir("/storage/groups/bds01/datasets/brains/low_est_uniform/")
+# os.mkdir("/storage/groups/bds01/datasets/brains/low_est_individ/")
 
 # dump matrices into csv
 for i in range(start, stop):
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform{0}/low_est_uniform_Theta{1}.csv".format(K, i), low_est_uniform["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform/low_est_uniform_Theta{0}.csv".format(i), low_est_uniform["Theta"][i], 
                delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform{0}/low_est_uniform_L{1}.csv".format(K, i), low_est_uniform["L"][i], 
-               delimiter=",", header='')
-    
-    
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ{0}/low_est_individ_Theta{1}.csv".format(K, i), low_est_indv["Theta"][i], 
-               delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ{0}/low_est_individ_L{1}.csv".format(K, i), low_est_indv["L"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform/low_est_uniform_L{0}.csv".format(i), low_est_uniform["L"][i], 
                delimiter=",", header='')
     
     
-with open("low_statistics{0}.txt".format(K), 'wb') as handle:
+    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ/low_est_individ_Theta{0}.csv".format(i), low_est_indv["Theta"][i], 
+               delimiter=",", header='')
+    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ/low_est_individ_L{0}.csv".format(i), low_est_indv["L"][i], 
+               delimiter=",", header='')
+    
+    
+with open("low_statistics{0}.txt".format(start), 'wb') as handle:
     pickle.dump(low_statistics, handle, protocol=pickle.HIGHEST_PROTOCOL)
