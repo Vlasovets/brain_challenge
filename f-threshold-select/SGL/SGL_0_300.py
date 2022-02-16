@@ -15,6 +15,7 @@ import seaborn as sns
 import scipy as sp
 import os
 import matplotlib.pyplot as plt
+import pickle
 
 from numpy.linalg import matrix_rank
 from matplotlib.pyplot import figure
@@ -55,11 +56,19 @@ lambda1_range = np.logspace(-0.9, -1.5, 10)
 
 N = corr.shape[1]
 
+start_time = datetime.now()
 
 est_uniform, est_indv, statistics = K_single_grid(corr, lambda1_range, N, 
                                                   method = 'eBIC', gamma = 0.3, 
                                                   latent = False, use_block = True)
 
+
+end_time = datetime.now()
+
+run_time = end_time - start_time
+
+statistics['time'] = run_time
+print("--- TIME: {0} ---".format(run_time))
 
 K = "0-300"
 
@@ -74,5 +83,7 @@ for i in range(start, stop):
     np.savetxt("/storage/groups/bds01/datasets/brains/est_individ{0}/est_individ{1}.csv".format(K, i), est_indv["Theta"][i], 
                delimiter=",", header='')
     
-with open("statistics{0}.txt".format(K), 'w') as f:
-    print(statistics, file=f)
+    
+with open("statistics{0}.txt".format(K), 'wb') as handle:
+    pickle.dump(statistics, handle, protocol=pickle.HIGHEST_PROTOCOL)
+

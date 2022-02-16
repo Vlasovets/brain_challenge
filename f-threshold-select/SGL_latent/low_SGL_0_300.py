@@ -68,7 +68,9 @@ end_time = datetime.now()
 
 run_time = end_time - start_time
 
+low_statistics['time'] = run_time
 print("--- TIME: {0} ---".format(run_time))
+
 
 K = "0-300"
 
@@ -89,8 +91,6 @@ for i in range(start, stop):
     np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ{0}/low_est_individ_L{1}.csv".format(K, i), low_est_indv["L"][i], 
                delimiter=",", header='')
     
-with open("low_statistics{0}.txt".format(K), 'w') as f:
-    print(low_statistics, file=f)
     
-with open("low_run_time{0}.txt".format(K), 'w') as f:
-    print(run_time, file=f)
+with open("low_statistics{0}.txt".format(K), 'wb') as handle:
+    pickle.dump(low_statistics, handle, protocol=pickle.HIGHEST_PROTOCOL)
