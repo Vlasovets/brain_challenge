@@ -70,20 +70,19 @@ run_time = end_time - start_time
 statistics['time'] = run_time
 print("--- TIME: {0} ---".format(run_time))
 
-K = "0-300"
 
-
-os.mkdir("/storage/groups/bds01/datasets/brains/est_uniform{0}/".format(K))
-os.mkdir("/storage/groups/bds01/datasets/brains/est_individ{0}/".format(K))
+#create dir
+# os.mkdir("/storage/groups/bds01/datasets/brains/est_uniform/")
+# os.mkdir("/storage/groups/bds01/datasets/brains/est_individ/")
 
 # dump matrices into csv
 for i in range(start, stop):
-    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform{0}/est_uniform{1}.csv".format(K, i), est_uniform["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/est_uniform/est_uniform{1}.csv".format(i), est_uniform["Theta"][i], 
                delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/est_individ{0}/est_individ{1}.csv".format(K, i), est_indv["Theta"][i], 
+    np.savetxt("/storage/groups/bds01/datasets/brains/est_individ/est_individ{1}.csv".format(i), est_indv["Theta"][i], 
                delimiter=",", header='')
     
     
-with open("statistics{0}.txt".format(K), 'wb') as handle:
+with open("statistics{0}.txt".format(start), 'wb') as handle:
     pickle.dump(statistics, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
