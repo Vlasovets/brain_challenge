@@ -6,5 +6,5 @@
 *.sh
 .nfs*
 #ignore GGLasso developer directory
-
+brains/*
 *f-threshold-select/GGLasso/
