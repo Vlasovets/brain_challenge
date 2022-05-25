@@ -21,13 +21,13 @@ corr_all_ix = np.arange(0, 950)
 outliers_ix = [96, 144, 210, 522]
 
 corr_filtered_ix = np.array([i for i in corr_all_ix if i not in outliers_ix])
-batch_1 = corr_filtered_ix[:300]
+batch_3 = corr_filtered_ix[600:]
 
 storage_dir = "/lustre/groups/bds01/datasets/brains/"
 
 corr = []
 
-for i in batch_1:
+for i in batch_3:
     corr.append(genfromtxt(storage_dir + "corr_matrices/corr{0}.csv".format(i), delimiter=','))
 
 corr = np.array(corr)
@@ -61,10 +61,10 @@ if not os.path.exists(storage_dir + "/est_uniform/"):
 if not os.path.exists(storage_dir + "/est_individ/"):
     os.makedirs(storage_dir + "/est_individ/")
 
-
+    
 ix = 0
 # dump matrices into csv
-for i in batch_1:
+for i in batch_3:
     np.savetxt(storage_dir + "/est_uniform/est_uniform{0}.csv".format(i), est_uniform["Theta"][ix], 
                delimiter=",", header='')
     np.savetxt(storage_dir + "/est_individ/est_individ{0}.csv".format(i), est_indv["Theta"][ix], 
@@ -72,6 +72,6 @@ for i in batch_1:
     ix += 1
     
 
-with open('statistics_SGL_0_300.txt', 'w') as f:
+with open('statistics_SGL_600_947.txt', 'w') as f:
     print(statistics, file=f)
 
