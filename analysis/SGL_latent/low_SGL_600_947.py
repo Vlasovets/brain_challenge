@@ -21,13 +21,13 @@ corr_all_ix = np.arange(0, 950)
 outliers_ix = [96, 144, 210, 522]
 
 corr_filtered_ix = np.array([i for i in corr_all_ix if i not in outliers_ix])
-batch_2 = corr_filtered_ix[300:600]
+batch_3 = corr_filtered_ix[600:]
 
 storage_dir = "/lustre/groups/bds01/datasets/brains/"
 
 corr = []
 
-for i in batch_2:
+for i in batch_3:
     corr.append(genfromtxt(storage_dir + "corr_matrices/corr{0}.csv".format(i), delimiter=','))
 
 corr = np.array(corr)
@@ -36,7 +36,6 @@ corr = np.array(corr)
 # ### Single GL plus low-rank
 lambda1_range = np.logspace(-0.9, -1.5, 4)
 mu1_range = np.arange(6.25, 11,  0.5)[::-1]
-
 
 K = len(corr)
 N = K*[corr.shape[1]]
@@ -66,7 +65,7 @@ if not os.path.exists(storage_dir + "/low_est_individ/"):
 
 ix = 0
 # dump matrices into csv
-for i in batch_2:
+for i in batch_3:
     np.savetxt(storage_dir + "/low_est_uniform/low_est_uniform{0}.csv".format(i), low_est_uniform["Theta"][ix], 
                delimiter=",", header='')
     np.savetxt(storage_dir + "/low_est_individ/low_est_individ{0}.csv".format(i), low_est_uniform["L"][ix], 
@@ -82,5 +81,5 @@ for i in batch_2:
     ix += 1
     
 
-with open('low_statistics_SGL_300_600.txt', 'w') as f:
+with open('low_statistics_SGL_600_947.txt', 'w') as f:
     print(low_statistics, file=f)

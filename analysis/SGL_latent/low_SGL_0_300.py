@@ -1,60 +1,44 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# %cd f-threshold-select
-
-
-# !git clone https://github.com/fabian-sp/GGLasso.git
-
-
 import gglasso
 import pickle
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import scipy as sp
 import os
 import matplotlib.pyplot as plt
 
-from numpy.linalg import matrix_rank
-from matplotlib.pyplot import figure
-from scipy import stats
-from scipy.linalg import eigh
 from numpy import genfromtxt
+from matplotlib.pyplot import figure
 from datetime import datetime
-import time
-
-from gglasso.solver.admm_solver import ADMM_MGL
-from gglasso.problem import glasso_problem
-
-from gglasso.helper.data_generation import generate_precision_matrix, group_power_network, sample_covariance_matrix
-from gglasso.helper.basic_linalg import adjacency_matrix
-from gglasso.helper.data_generation import time_varying_power_network, sample_covariance_matrix
-from gglasso.helper.experiment_helper import lambda_grid, discovery_rate, error
-from gglasso.helper.utils import get_K_identity
-from gglasso.helper.experiment_helper import plot_evolution, plot_deviation, surface_plot, single_heatmap_animation
-from gglasso.helper.model_selection import aic, ebic, K_single_grid
+from gglasso.helper.model_selection import K_single_grid
 
 
 # ### Read data
 
-start = 0
-stop = 300
+corr_all_ix = np.arange(0, 950)
+outliers_ix = [96, 144, 210, 522]
+
+corr_filtered_ix = np.array([i for i in corr_all_ix if i not in outliers_ix])
+batch_1 = corr_filtered_ix[:300]
+
+storage_dir = "/lustre/groups/bds01/datasets/brains/"
 
 corr = []
 
-for i in range(start, stop):
-    corr.append(genfromtxt("/storage/groups/bds01/datasets/brains/corr_matrices/corr{0}.csv".format(i), delimiter=','))
+for i in batch_1:
+    corr.append(genfromtxt(storage_dir + "corr_matrices/corr{0}.csv".format(i), delimiter=','))
 
 corr = np.array(corr)
-corr.shape
 
 
 # ### Single GL plus low-rank
 lambda1_range = np.logspace(-0.9, -1.5, 4)
 mu1_range = np.arange(6.25, 11,  0.5)[::-1]
 
-N = corr.shape[1]
+K = len(corr)
+N = K*[corr.shape[1]]
 
 
 start_time = datetime.now()
@@ -72,23 +56,30 @@ low_statistics['time'] = run_time
 print("--- TIME: {0} ---".format(run_time))
 
 
+if not os.path.exists(storage_dir + "/low_est_uniform/"):
+    os.makedirs(storage_dir + "/low_est_uniform/")
+    
+if not os.path.exists(storage_dir + "/low_est_individ/"):
+    os.makedirs(storage_dir + "/low_est_individ/")
 
-# os.mkdir("/storage/groups/bds01/datasets/brains/low_est_uniform/")
-# os.mkdir("/storage/groups/bds01/datasets/brains/low_est_individ/")
 
+ix = 0
 # dump matrices into csv
-for i in range(start, stop):
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform/low_est_uniform_Theta{0}.csv".format(i), low_est_uniform["Theta"][i], 
+for i in batch_1:
+    np.savetxt(storage_dir + "/low_est_uniform/low_est_uniform{0}.csv".format(i), low_est_uniform["Theta"][ix], 
                delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_uniform/low_est_uniform_L{0}.csv".format(i), low_est_uniform["L"][i], 
-               delimiter=",", header='')
-    
-    
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ/low_est_individ_Theta{0}.csv".format(i), low_est_indv["Theta"][i], 
-               delimiter=",", header='')
-    np.savetxt("/storage/groups/bds01/datasets/brains/low_est_individ/low_est_individ_L{0}.csv".format(i), low_est_indv["L"][i], 
+    np.savetxt(storage_dir + "/low_est_individ/low_est_individ{0}.csv".format(i), low_est_uniform["L"][ix], 
                delimiter=",", header='')
     
     
-with open("low_statistics{0}.txt".format(start), 'wb') as handle:
-    pickle.dump(low_statistics, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    np.savetxt(storage_dir + "/low_est_uniform/low_est_uniform{0}.csv".format(i), low_est_indv["Theta"][ix], 
+               delimiter=",", header='')
+    np.savetxt(storage_dir + "/low_est_individ/low_est_individ{0}.csv".format(i), low_est_indv["L"][ix], 
+               delimiter=",", header='')
+    
+    
+    ix += 1
+    
+
+with open('low_statistics_SGL_0_300.txt', 'w') as f:
+    print(low_statistics, file=f)
