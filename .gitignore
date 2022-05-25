@@ -1,8 +1,9 @@
 # ignore jupyter checkpoints
 *.ipynb_checkpoints/
 *.out
-*.sh
-.nfs*
-#ignore GGLasso developer directory
-brains/*
+preprocessing/*.sh
+analysis/SGL/*.sh
+analysis/SGL_latent/*.sh
 data/*
+brains/*
+.nfs*
