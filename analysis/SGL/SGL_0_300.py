@@ -34,7 +34,6 @@ corr = np.array(corr)
 
 
 # ### Single GL
-# lambda1_range = np.logspace(0, -3, 8)
 lambda1_range = np.logspace(-0.9, -1.5, 10)
 
 K = len(corr)
