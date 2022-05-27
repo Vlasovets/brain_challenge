@@ -7,3 +7,4 @@ analysis/SGL_latent/*.sh
 data/*
 brains/*
 .nfs*
+*.csv
