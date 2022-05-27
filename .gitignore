@@ -8,3 +8,4 @@ data/*
 brains/*
 .nfs*
 *.csv
+plots/*.html
